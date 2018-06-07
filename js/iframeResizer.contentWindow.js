@@ -905,7 +905,10 @@
 
     var	currentHeight,currentWidth;
 
-    if (isSizeChangeDetected() || 'init' === triggerEvent) {
+    //Fix for IE11 when iframe removed from DOM but script still running
+    if (typeof window === 'undefined' || typeof window.parseInt !== 'function') {
+      return;
+    } else if (isSizeChangeDetected() || 'init' === triggerEvent) {
       lockTrigger();
       resizeIFrame();
     } else {
